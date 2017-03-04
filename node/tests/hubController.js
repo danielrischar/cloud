@@ -161,4 +161,5 @@ test.serial('InvalidOnboardingInfoForRefreshAuthTokenThrows', async t =>{
     const error = await t.throws(hubController.refreshAuthToken(config.hubId, invalidOnboardingConfig.onboardingInfo, authInfo));
     t.is(error.name, "OpenT2TError");
     t.is(error.statusCode, 401);
+    t.is(error.innerError.message, OpenT2TConstants.InvalidAuthInfoInput);
 });
