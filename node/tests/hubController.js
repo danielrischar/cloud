@@ -109,7 +109,7 @@ test.serial('translatePlatforms', async t => {
 
     // Calculate an HMAC for the message that will be validated successfully
     var hmac = require('crypto').createHmac('sha1', config.subscriptionInfo.key);
-    hmac.update(config.subscription.sampleFeed.toString());
+    hmac.update(JSON.stringify(config.subscription.sampleFeed));
     verificationInfo.hmac = hmac.digest("hex");
     verificationInfo.header = {
         "X-Hub-Signature": verificationInfo.hmac
@@ -161,5 +161,4 @@ test.serial('InvalidOnboardingInfoForRefreshAuthTokenThrows', async t =>{
     const error = await t.throws(hubController.refreshAuthToken(config.hubId, invalidOnboardingConfig.onboardingInfo, authInfo));
     t.is(error.name, "OpenT2TError");
     t.is(error.statusCode, 401);
-    t.is(error.innerError.message, OpenT2TConstants.InvalidAuthInfoInput);
 });
